@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Dictionary Entry</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #output {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .a {
+            width: 100%;
+            height: 2.5em;
+            font-size: 100%;
+            background-color: white;
+        }
+        .b {
+            width: 100%;
+            height: 5em;
+            font-size: 100%;
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+
+<div id="output"></div>
+
+<button class="a" onclick="play()">Audio</button>
+<button class="b" onclick="displayRandomKey()">Change</button>
+
+<script>
+    // Dictionary (key-value pairs)
+    let myDictionary = {
+        "apple": "A fruit that grows on trees.",
+        "car": "A motor vehicle with four wheels.",
+        "javascript": "A programming language commonly used for web development.",
+        "ocean": "A large body of saltwater.",
+        "f": "fff."
+    };
+
+    let num = 1;
+    let randomKey = null; // Declare randomKey outside the function to make it accessible in both cases
+    let music = null;
+
+    function displayRandomKey() {
+        let outputContainer = document.getElementById('output');
+        if (num === 1) {
+            if (music){
+                music.pause();
+                music = null;
+            }
+            let keys = Object.keys(myDictionary);
+            randomKey = keys[Math.floor(Math.random() * keys.length)];
+            outputContainer.innerHTML = '<strong>Q:</strong> ' + randomKey;
+            num = 2;
+        } else {
+            outputContainer.innerHTML += '<br><strong>A:</strong> ' + myDictionary[randomKey];
+            music = new Audio('audio/'+ myDictionary[randomKey] + '.mp3');
+            music.play();
+            num = 1;
+        }
+    }
+    function play(){
+        if (music) {
+            music.currentTime = 0;
+            music.play();
+        }
+    }
+</script>
+
+</body>
+</html>
